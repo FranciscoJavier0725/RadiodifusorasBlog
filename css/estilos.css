@@ -1,0 +1,89 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  /* TODO: Falta agregar un boton para ponerlo en modo oscuro */
+  /* background-color: black; */
+}
+
+/* Quitar los espacios de arriba y de abajo del titulo */
+h3 {
+  margin-block-start: auto;
+  margin-block-end: auto;
+  color: black !important;
+}
+
+.emisorasContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.tarjetaRadio {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.radioContenido {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.logoRadio {
+  height: 0;
+  /* Quitar espacios en blanco */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoRadio img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+
+.reproductorMedia {
+  flex: 1;
+  min-width: 0;
+}
+
+.reproductorMedia audio {
+  width: 100%;
+}
+
+.botonesRadio {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  font-size: 30px;
+}
+
+/* Estilos de los iconos de google de la libreria material */
+.material-symbols-outlined {
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+  font-size: 30px;
+}
+
+.iconPlay {
+  background: black;
+  color: deepskyblue;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.iconReload {
+  background: black;
+  color: deepskyblue;
+  border-radius: 7px;
+  cursor: pointer;
+}
