@@ -9,7 +9,7 @@ let arregloRadiodifusoras = [
     id: "radio2",
     nameEstacion: "Exa 97.3",
     audio: "https://18213.live.streamtheworld.com/XHRSMTYFM.mp3",
-    img: "https://cdn.instant.audio/images/logos/emisoras-com-mx/exa-97-3-fm-monterrey.png",
+    img: "https://cdn-profiles.tunein.com/s24582/images/logod.png?t=637853041630000000",
   },
   {
     id: "radio3",
@@ -44,7 +44,7 @@ const audio = document.getElementById("emisorasAudio");
 let contenidoAduioHtml = "";
 arregloRadiodifusoras.forEach((radiodifusora, index) => {
   contenidoAduioHtml += `
-        <article class="tarjetaRadio">
+        <article id="TarjetaRadio-${radiodifusora.id}" class="tarjetaRadio">
         <h3>${index + 1}.- ${radiodifusora.nameEstacion}</h3>
         <div class="botonesRadio">
         <span id="icono-${radiodifusora.id}" class="material-symbols-outlined iconPlay" onClick="playPause('${radiodifusora.id}')">
@@ -81,10 +81,8 @@ audio.innerHTML = contenidoAduioHtml;
 // TODO: Agregar documentación a las funciones del audio
 
 function playPause(audioId) {
-  console.log("audioId", audioId);
   let audio = document.getElementById(audioId);
   const icono = document.getElementById(`icono-${audioId}`);
-  console.log("audio", audio);
   // Pausar todos los demas audios
   document.querySelectorAll("audio").forEach((a) => {
     if (a !== audio) {
@@ -142,4 +140,56 @@ arregloRadiodifusoras.forEach((radiodifusora) => {
   audio.addEventListener("pause", () => {
     icono.textContent = "play_circle";
   });
+});
+
+// Funciones para activar el modo oscuro
+
+function activarModoOscuro() {
+  arregloRadiodifusoras.forEach((radiodifusora) => {
+    const idTarjetaRadio = document.getElementById(
+      `TarjetaRadio-${radiodifusora.id}`,
+    );
+    idTarjetaRadio.className = "tarjetaRadioBlack";
+    const h3Label = document.querySelectorAll("h3");
+    h3Label.forEach((h3) => {
+      h3.style.color = "white";
+    });
+    const bodyColor = document.querySelector("body");
+    bodyColor.style.backgroundColor = "black";
+  });
+}
+
+function desactivarModoOscuro() {
+  arregloRadiodifusoras.forEach((radiodifusora) => {
+    const idTarjetaRadio = document.getElementById(
+      `TarjetaRadio-${radiodifusora.id}`,
+    );
+    idTarjetaRadio.className = "tarjetaRadio";
+    const h3Label = document.querySelectorAll("h3");
+    h3Label.forEach((h3) => {
+      h3.style.color = "black";
+    });
+    const bodyColor = document.querySelector("body");
+    bodyColor.style.backgroundColor = "white";
+  });
+}
+
+const idToggleBlack = document.getElementById("idToggleBlack");
+const txtBtnBlack = document.getElementById("txtBtnBlack");
+idToggleBlack.addEventListener("change", () => {
+  /* En cuando detecta encendido el switch entonces agrea el modo oscuro, pero cuando se desactiva se quita el modo oscuro*/
+  document.body.classList.toggle("dark-mode", idToggleBlack.checked);
+  if (idToggleBlack.checked) {
+    activarModoOscuro();
+    txtBtnBlack.textContent = "Desactivar modo oscuro";
+  } else {
+    desactivarModoOscuro();
+    txtBtnBlack.textContent = "Activar modo oscuro";
+  }
+});
+
+// Poner todos los h3 en negrita al cargar la página (google les cambia el color)
+const h3Label = document.querySelectorAll("h3");
+h3Label.forEach((h3) => {
+  h3.style.color = "black";
 });

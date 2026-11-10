@@ -1,29 +1,24 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
-  /* TODO: Falta agregar un boton para ponerlo en modo oscuro */
-  /* background-color: black; */
 }
-
 /* Quitar los espacios de arriba y de abajo del titulo */
 h3 {
   margin-block-start: auto;
   margin-block-end: auto;
-  color: black !important;
+  /* color: black !important; */
 }
-
 .emisorasContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
 }
-
 .tarjetaRadio {
+  color: black !important;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 12px;
   background: #fff;
 }
-
 .radioContenido {
   display: flex;
   flex-direction: row-reverse;
@@ -31,30 +26,24 @@ h3 {
   gap: 15px;
   margin-top: 10px;
 }
-
 .logoRadio {
-  height: 0;
-  /* Quitar espacios en blanco */
+  height: 0; /* Quitar espacios en blanco */
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .logoRadio img {
   width: 70px;
   height: 70px;
   object-fit: contain;
 }
-
 .reproductorMedia {
   flex: 1;
   min-width: 0;
 }
-
 .reproductorMedia audio {
   width: 100%;
 }
-
 .botonesRadio {
   display: flex;
   flex-direction: row;
@@ -63,7 +52,6 @@ h3 {
   gap: 15px;
   font-size: 30px;
 }
-
 /* Estilos de los iconos de google de la libreria material */
 .material-symbols-outlined {
   font-variation-settings:
@@ -73,17 +61,86 @@ h3 {
     "opsz" 24;
   font-size: 30px;
 }
-
 .iconPlay {
   background: black;
   color: deepskyblue;
   border-radius: 7px;
   cursor: pointer;
 }
-
 .iconReload {
   background: black;
   color: deepskyblue;
   border-radius: 7px;
   cursor: pointer;
+}
+
+.tarjetaRadioBlack {
+  color: white !important ; /* Esto no funciona */
+  padding: 10px;
+  border: 1px solid deepskyblue;
+  border-radius: 12px;
+  background: black;
+}
+
+/* estilos del toggle */
+
+.toogleBlack {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: row-reverse;
+}
+
+/* Contenedor */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #ccc;
+  border-radius: 30px;
+  transition: 0.4s;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:checked + .slider::before {
+  transform: translateX(24px);
+}
+
+.txtModoBlack {
+  color: #757575;
+}
+
+/* Modo oscuro activado */
+/* FIX: Lo de las clases del blog se pueden quitar cuando el arhivo no sea para el blog de google*/
+/* Lo que dice blog es parte de las clases del blog de google*/
+body.dark-mode .Blog .blog-posts .post-outer-container {
+  background: black !important;
 }
