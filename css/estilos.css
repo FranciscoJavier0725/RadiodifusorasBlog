@@ -5,7 +5,6 @@ body {
 h3 {
   margin-block-start: auto;
   margin-block-end: auto;
-  /* color: black !important; */
 }
 .emisorasContainer {
   display: grid;
@@ -75,7 +74,6 @@ h3 {
 }
 
 .tarjetaRadioBlack {
-  color: white !important ; /* Esto no funciona */
   padding: 10px;
   border: 1px solid deepskyblue;
   border-radius: 12px;

@@ -40,46 +40,58 @@ let arregloRadiodifusoras = [
     img: "https://cdn-profiles.tunein.com/s90316/images/logod.png?t=638863890440000000",
   },
 ];
+
+/**
+ * Genera dinámicamente el contenido HTML de las tarjetas de las emisoras de radio.
+ * Recorre el arreglo de radiodifusoras y construye una tarjeta para cada emisora,
+ * incluyendo su nombre, botones de reproducción y recarga, logotipo y reproductor de audio.
+ */
 const audio = document.getElementById("emisorasAudio");
-let contenidoAduioHtml = "";
+let contenidoAudioHtml = "";
+
 arregloRadiodifusoras.forEach((radiodifusora, index) => {
-  contenidoAduioHtml += `
-        <article id="TarjetaRadio-${radiodifusora.id}" class="tarjetaRadio">
-        <h3>${index + 1}.- ${radiodifusora.nameEstacion}</h3>
-        <div class="botonesRadio">
-        <span id="icono-${radiodifusora.id}" class="material-symbols-outlined iconPlay" onClick="playPause('${radiodifusora.id}')">
-            play_circle
+  contenidoAudioHtml += `
+    <article id="TarjetaRadio-${radiodifusora.id}" class="tarjetaRadio">
+      <h3>${index + 1}.- ${radiodifusora.nameEstacion}</h3>
+      <div class="botonesRadio">
+        <span
+          id="icono-${radiodifusora.id}"
+          class="material-symbols-outlined iconPlay"
+          onClick="playPause('${radiodifusora.id}')"
+        >
+          play_circle
         </span>
-        <span class="material-symbols-outlined iconReload" onClick="reloadRadio('${radiodifusora.id}')">
-            Refresh
+        <span
+          class="material-symbols-outlined iconReload"
+          onClick="reloadRadio('${radiodifusora.id}')"
+        >
+          Refresh
         </span>
-        </div>
-        <div class="radioContenido">
+      </div>
+      <div class="radioContenido">
         <div class="logoRadio">
-            <img
-              src="${radiodifusora.img}"
-              alt="${radiodifusora.nameEstacion}"
-            />
+          <img src="${radiodifusora.img}" alt="${radiodifusora.nameEstacion}" />
         </div>
         <div class="reproductorMedia">
-            <audio
-             id="${radiodifusora.id}"
-             controls
-             preload="none">
-             <source
-              src="${radiodifusora.audio}"
-              type="audio/aac" />
-            </audio>
+          <audio id="${radiodifusora.id}" controls preload="none">
+            <source src="${radiodifusora.audio}" type="audio/aac" />
+          </audio>
         </div>
-        </div>
-        </article>
-        `;
+      </div>
+    </article>
+    `;
 });
 
-audio.innerHTML = contenidoAduioHtml;
+audio.innerHTML = contenidoAudioHtml;
 
-// TODO: Agregar documentación a las funciones del audio
-
+/**
+ * Reproduce o pausa el audio de una emisora de radio.
+ * Si se reproduce una emisora, pausa automáticamente las demás.
+ * También actualiza el icono del reproductor según su estado.
+ *
+ * @param {string} audioId - Identificador del elemento de audio que se desea controlar.
+ * @returns {void}
+ */
 function playPause(audioId) {
   let audio = document.getElementById(audioId);
   const icono = document.getElementById(`icono-${audioId}`);
@@ -102,6 +114,13 @@ function playPause(audioId) {
   }
 }
 
+/**
+ * Recarga la transmisión de audio de una emisora de radio.
+ * Pausa las demás emisoras, restablece la fuente de audio y vuelve a iniciar la reproducción.
+ *
+ * @param {string} audioId - Identificador del elemento de audio que se desea recargar.
+ * @returns {void}
+ */
 function reloadRadio(audioId) {
   let audio = document.getElementById(audioId);
   // Pausar los demas audios disponibles
@@ -122,7 +141,11 @@ function reloadRadio(audioId) {
   });
 }
 
-// Sincronizar los iconos de audio dependiendo si se esta reproduciendo o no
+/**
+ * Sincroniza los iconos de los reproductores de audio según su estado de reproducción.
+ * Agrega eventos para actualizar los iconos al reproducir o pausar una emisora.
+ * También pausa automáticamente las demás emisoras cuando comienza una reproducción.
+ */
 arregloRadiodifusoras.forEach((radiodifusora) => {
   const audio = document.getElementById(radiodifusora.id);
   const icono = document.getElementById(`icono-${radiodifusora.id}`);
@@ -142,42 +165,54 @@ arregloRadiodifusoras.forEach((radiodifusora) => {
   });
 });
 
-// Funciones para activar el modo oscuro
-
+// TODO: Falta unificar las funciones para activar el modo oscuro, para que solo sea una funcion para acrivar o desactivar el modo oscuro
+/**
+ * Activa el modo oscuro en las tarjetas de las emisoras de radio y en el fondo de la página.
+ */
 function activarModoOscuro() {
   arregloRadiodifusoras.forEach((radiodifusora) => {
     const idTarjetaRadio = document.getElementById(
       `TarjetaRadio-${radiodifusora.id}`,
     );
     idTarjetaRadio.className = "tarjetaRadioBlack";
-    const h3Label = document.querySelectorAll("h3");
-    h3Label.forEach((h3) => {
-      h3.style.color = "white";
-    });
-    const bodyColor = document.querySelector("body");
-    bodyColor.style.backgroundColor = "black";
   });
+  const h3Label = document.querySelectorAll("h3");
+  h3Label.forEach((h3) => {
+    h3.style.color = "white";
+  });
+  const bodyColor = document.querySelector("body");
+  bodyColor.style.backgroundColor = "black";
 }
 
+/**
+ * Desactiva el modo oscuro en las tarjetas de las emisoras de radio y en el fondo de la página.
+ */
 function desactivarModoOscuro() {
   arregloRadiodifusoras.forEach((radiodifusora) => {
     const idTarjetaRadio = document.getElementById(
       `TarjetaRadio-${radiodifusora.id}`,
     );
     idTarjetaRadio.className = "tarjetaRadio";
-    const h3Label = document.querySelectorAll("h3");
-    h3Label.forEach((h3) => {
-      h3.style.color = "black";
-    });
-    const bodyColor = document.querySelector("body");
-    bodyColor.style.backgroundColor = "white";
   });
+  const h3Label = document.querySelectorAll("h3");
+  h3Label.forEach((h3) => {
+    h3.style.color = "black";
+  });
+  const bodyColor = document.querySelector("body");
+  bodyColor.style.backgroundColor = "white";
 }
 
+/**
+ * Controla la activación y desactivación del modo oscuro mediante un interruptor.
+ * Detecta los cambios de estado del switch y ejecuta la función correspondiente
+ * para aplicar o quitar el modo oscuro.
+ * También actualiza el texto del botón según el estado del interruptor.
+ */
 const idToggleBlack = document.getElementById("idToggleBlack");
 const txtBtnBlack = document.getElementById("txtBtnBlack");
 idToggleBlack.addEventListener("change", () => {
-  /* En cuando detecta encendido el switch entonces agrea el modo oscuro, pero cuando se desactiva se quita el modo oscuro*/
+   /* En cuanto detecta encendido el switch, agrega el modo oscuro;
+     cuando se desactiva, se quita el modo oscuro. */
   document.body.classList.toggle("dark-mode", idToggleBlack.checked);
   if (idToggleBlack.checked) {
     activarModoOscuro();
@@ -188,7 +223,8 @@ idToggleBlack.addEventListener("change", () => {
   }
 });
 
-// Poner todos los h3 en negrita al cargar la página (google les cambia el color)
+// Establecer el color negro en todos los encabezados h3 al cargar la página.
+// Esto evita que los estilos predeterminados de Blogger modifiquen su color.
 const h3Label = document.querySelectorAll("h3");
 h3Label.forEach((h3) => {
   h3.style.color = "black";
