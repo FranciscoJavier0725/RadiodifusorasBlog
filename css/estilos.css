@@ -1,16 +1,19 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
+
 /* Quitar los espacios de arriba y de abajo del titulo */
 h3 {
   margin-block-start: auto;
   margin-block-end: auto;
 }
+
 .emisorasContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
 }
+
 .tarjetaRadio {
   color: black !important;
   padding: 10px;
@@ -18,6 +21,8 @@ h3 {
   border-radius: 12px;
   background: #fff;
 }
+
+/* Contenedor del logo y reproductor */
 .radioContenido {
   display: flex;
   flex-direction: row-reverse;
@@ -25,24 +30,32 @@ h3 {
   gap: 15px;
   margin-top: 10px;
 }
+
+/* Logo de la emisora */
 .logoRadio {
   height: 0; /* Quitar espacios en blanco */
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .logoRadio img {
   width: 70px;
   height: 70px;
   object-fit: contain;
 }
+
+/* Reproductor de audio */
 .reproductorMedia {
   flex: 1;
   min-width: 0;
 }
+
 .reproductorMedia audio {
   width: 100%;
 }
+
+/* Contenedor de botones */
 .botonesRadio {
   display: flex;
   flex-direction: row;
@@ -51,7 +64,8 @@ h3 {
   gap: 15px;
   font-size: 30px;
 }
-/* Estilos de los iconos de google de la libreria material */
+
+/* Iconos de Google Material Symbols */
 .material-symbols-outlined {
   font-variation-settings:
     "FILL" 0,
@@ -60,12 +74,16 @@ h3 {
     "opsz" 24;
   font-size: 30px;
 }
+
+/* Botón de reproducción */
 .iconPlay {
   background: black;
   color: deepskyblue;
   border-radius: 7px;
   cursor: pointer;
 }
+
+/* Botón de recarga */
 .iconReload {
   background: black;
   color: deepskyblue;
@@ -73,6 +91,11 @@ h3 {
   cursor: pointer;
 }
 
+/* ========================================
+   MODO OSCURO
+======================================== */
+
+/* Tarjeta de radio */
 .tarjetaRadioBlack {
   padding: 10px;
   border: 1px solid deepskyblue;
@@ -80,8 +103,15 @@ h3 {
   background: black;
 }
 
-/* estilos del toggle */
+.txtModoBlack {
+  color: #757575;
+}
 
+/* ========================================
+   TOGGLE DE MODO OSCURO
+======================================== */
+
+/* Contenedor del toggle */
 .toogleBlack {
   display: flex;
   align-items: center;
@@ -89,7 +119,7 @@ h3 {
   flex-direction: row-reverse;
 }
 
-/* Contenedor */
+/* Interruptor */
 .switch {
   position: relative;
   display: inline-block;
@@ -97,12 +127,14 @@ h3 {
   height: 26px;
 }
 
+/* Ocultar checkbox original */
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
+/* Fondo del interruptor */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -112,6 +144,7 @@ h3 {
   transition: 0.4s;
 }
 
+/* Círculo del interruptor */
 .slider::before {
   content: "";
   position: absolute;
@@ -124,6 +157,7 @@ h3 {
   transition: 0.4s;
 }
 
+/* Interruptor activado */
 input:checked + .slider {
   background-color: #2196f3;
 }
@@ -132,13 +166,11 @@ input:checked + .slider::before {
   transform: translateX(24px);
 }
 
-.txtModoBlack {
-  color: #757575;
-}
+/* ========================================
+   AJUSTES ESPECÍFICOS DE BLOGGER
+======================================== */
 
-/* Modo oscuro activado */
-/* FIX: Lo de las clases del blog se pueden quitar cuando el arhivo no sea para el blog de google*/
-/* Lo que dice blog es parte de las clases del blog de google*/
+/* Modo oscuro aplicado a las entradas del blog de Google */
 body.dark-mode .Blog .blog-posts .post-outer-container {
   background: black !important;
 }
