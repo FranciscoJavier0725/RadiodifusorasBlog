@@ -41,14 +41,18 @@ let arregloRadiodifusoras = [
   },
 ];
 
+const audio = document.getElementById("emisorasAudio");
+let contenidoAudioHtml = "";
+
+const idToggleBlack = document.getElementById("idToggleBlack");
+const txtBtnBlack = document.getElementById("txtBtnBlack");
+const h3Label = document.querySelectorAll("h3");
+
 /**
  * Genera dinámicamente el contenido HTML de las tarjetas de las emisoras de radio.
  * Recorre el arreglo de radiodifusoras y construye una tarjeta para cada emisora,
  * incluyendo su nombre, botones de reproducción y recarga, logotipo y reproductor de audio.
  */
-const audio = document.getElementById("emisorasAudio");
-let contenidoAudioHtml = "";
-
 arregloRadiodifusoras.forEach((radiodifusora, index) => {
   contenidoAudioHtml += `
     <article id="TarjetaRadio-${radiodifusora.id}" class="tarjetaRadio">
@@ -208,10 +212,8 @@ function desactivarModoOscuro() {
  * para aplicar o quitar el modo oscuro.
  * También actualiza el texto del botón según el estado del interruptor.
  */
-const idToggleBlack = document.getElementById("idToggleBlack");
-const txtBtnBlack = document.getElementById("txtBtnBlack");
 idToggleBlack.addEventListener("change", () => {
-   /* En cuanto detecta encendido el switch, agrega el modo oscuro;
+  /* En cuanto detecta encendido el switch, agrega el modo oscuro;
      cuando se desactiva, se quita el modo oscuro. */
   document.body.classList.toggle("dark-mode", idToggleBlack.checked);
   if (idToggleBlack.checked) {
@@ -225,7 +227,6 @@ idToggleBlack.addEventListener("change", () => {
 
 // Establecer el color negro en todos los encabezados h3 al cargar la página.
 // Esto evita que los estilos predeterminados de Blogger modifiquen su color.
-const h3Label = document.querySelectorAll("h3");
 h3Label.forEach((h3) => {
   h3.style.color = "black";
 });
