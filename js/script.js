@@ -173,41 +173,27 @@ function inicializarReproductor() {
   });
 }
 
-// TODO: Falta unificar las funciones para activar el modo oscuro, para que solo sea una funcion para acrivar o desactivar el modo oscuro
 /**
- * Activa el modo oscuro en las tarjetas de las emisoras de radio y en el fondo de la página.
+ * Activa o desactiva el modo oscuro de la página.
+ * Modifica el fondo del body, el color de los títulos
+ * y la apariencia de las tarjetas de las radiodifusoras.
+ * @param {boolean} [isActivoModoOscuro=false] - Indica si el modo oscuro está activo.
  */
-function activarModoOscuro() {
-  arregloRadiodifusoras.forEach((radiodifusora) => {
-    const idTarjetaRadio = document.getElementById(
-      `TarjetaRadio-${radiodifusora.id}`,
-    );
-    idTarjetaRadio.className = "tarjetaRadioBlack";
-  });
-  const h3Label = document.querySelectorAll("h3");
-  h3Label.forEach((h3) => {
-    h3.style.color = "white";
-  });
-  const bodyColor = document.querySelector("body");
-  bodyColor.style.backgroundColor = "black";
-}
+function modoOscuro(isActivoModoOscuro = false) {
+  console.log("Se manda a llamar la función modoOscuro actualizado");
 
-/**
- * Desactiva el modo oscuro en las tarjetas de las emisoras de radio y en el fondo de la página.
- */
-function desactivarModoOscuro() {
   arregloRadiodifusoras.forEach((radiodifusora) => {
     const idTarjetaRadio = document.getElementById(
       `TarjetaRadio-${radiodifusora.id}`,
     );
-    idTarjetaRadio.className = "tarjetaRadio";
+    idTarjetaRadio.classList.toggle("tarjetaRadioBlack", isActivoModoOscuro);
   });
   const h3Label = document.querySelectorAll("h3");
   h3Label.forEach((h3) => {
-    h3.style.color = "black";
+    h3.style.color = isActivoModoOscuro ? "white" : "black";
   });
   const bodyColor = document.querySelector("body");
-  bodyColor.style.backgroundColor = "white";
+  bodyColor.style.backgroundColor = isActivoModoOscuro ? "black" : "white";
 }
 
 /**
@@ -220,10 +206,10 @@ function inicializarModoOscuro() {
      cuando se desactiva, se quita el modo oscuro. */
     document.body.classList.toggle("dark-mode", idToggleBlack.checked);
     if (idToggleBlack.checked) {
-      activarModoOscuro();
+      modoOscuro(true);
       txtBtnBlack.textContent = "Desactivar modo oscuro";
     } else {
-      desactivarModoOscuro();
+      modoOscuro(false);
       txtBtnBlack.textContent = "Activar modo oscuro";
     }
   });
