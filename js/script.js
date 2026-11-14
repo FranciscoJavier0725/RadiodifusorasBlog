@@ -53,8 +53,9 @@ const h3Label = document.querySelectorAll("h3");
  * Recorre el arreglo de radiodifusoras y construye una tarjeta para cada emisora,
  * incluyendo su nombre, botones de reproducción y recarga, logotipo y reproductor de audio.
  */
-arregloRadiodifusoras.forEach((radiodifusora, index) => {
-  contenidoAudioHtml += `
+function generarTarjetas() {
+  arregloRadiodifusoras.forEach((radiodifusora, index) => {
+    contenidoAudioHtml += `
     <article id="TarjetaRadio-${radiodifusora.id}" class="tarjetaRadio">
       <h3>${index + 1}.- ${radiodifusora.nameEstacion}</h3>
       <div class="botonesRadio">
@@ -84,9 +85,10 @@ arregloRadiodifusoras.forEach((radiodifusora, index) => {
       </div>
     </article>
     `;
-});
+  });
 
-audio.innerHTML = contenidoAudioHtml;
+  audio.innerHTML = contenidoAudioHtml;
+}
 
 /**
  * Reproduce o pausa el audio de una emisora de radio.
@@ -146,87 +148,79 @@ function reloadRadio(audioId) {
 }
 
 /**
- * Sincroniza los iconos de los reproductores de audio según su estado de reproducción.
- * Agrega eventos para actualizar los iconos al reproducir o pausar una emisora.
- * También pausa automáticamente las demás emisoras cuando comienza una reproducción.
+ * Inicializa los eventos de los reproductores de audio.
+ * Sincroniza los iconos y evita que varias emisoras
+ * se reproduzcan simultáneamente.
  */
-arregloRadiodifusoras.forEach((radiodifusora) => {
-  const audio = document.getElementById(radiodifusora.id);
-  const icono = document.getElementById(`icono-${radiodifusora.id}`);
+function inicializarReproductor() {
+  arregloRadiodifusoras.forEach((radiodifusora) => {
+    const audio = document.getElementById(radiodifusora.id);
+    const icono = document.getElementById(`icono-${radiodifusora.id}`);
 
-  audio.addEventListener("play", () => {
-    icono.textContent = "pause_circle";
-    // Pausar los demas audios disponibles
-    document.querySelectorAll("audio").forEach((a) => {
-      if (a !== audio) {
-        a.pause();
-      }
+    audio.addEventListener("play", () => {
+      icono.textContent = "pause_circle";
+      // Pausar los demas audios disponibles
+      document.querySelectorAll("audio").forEach((a) => {
+        if (a !== audio) {
+          a.pause();
+        }
+      });
+    });
+
+    audio.addEventListener("pause", () => {
+      icono.textContent = "play_circle";
     });
   });
+}
 
-  audio.addEventListener("pause", () => {
-    icono.textContent = "play_circle";
-  });
-});
-
-// TODO: Falta unificar las funciones para activar el modo oscuro, para que solo sea una funcion para acrivar o desactivar el modo oscuro
 /**
- * Activa el modo oscuro en las tarjetas de las emisoras de radio y en el fondo de la página.
+ * Activa o desactiva el modo oscuro de la página.
+ * Modifica el fondo del body, el color de los títulos
+ * y la apariencia de las tarjetas de las radiodifusoras.
+ * @param {boolean} [isActivoModoOscuro=false] - Indica si el modo oscuro está activo.
  */
-function activarModoOscuro() {
+function modoOscuro(isActivoModoOscuro = false) {
+  console.log("Se manda a llamar la función modoOscuro actualizado");
+
   arregloRadiodifusoras.forEach((radiodifusora) => {
     const idTarjetaRadio = document.getElementById(
       `TarjetaRadio-${radiodifusora.id}`,
     );
-    idTarjetaRadio.className = "tarjetaRadioBlack";
+    idTarjetaRadio.classList.toggle("tarjetaRadioBlack", isActivoModoOscuro);
   });
   const h3Label = document.querySelectorAll("h3");
   h3Label.forEach((h3) => {
-    h3.style.color = "white";
+    h3.style.color = isActivoModoOscuro ? "white" : "black";
   });
   const bodyColor = document.querySelector("body");
-  bodyColor.style.backgroundColor = "black";
+  bodyColor.style.backgroundColor = isActivoModoOscuro ? "black" : "white";
 }
 
 /**
- * Desactiva el modo oscuro en las tarjetas de las emisoras de radio y en el fondo de la página.
+ * Inicializa el interruptor del modo oscuro.
+ * Detecta los cambios de estado y ejecuta la función correspondiente.
  */
-function desactivarModoOscuro() {
-  arregloRadiodifusoras.forEach((radiodifusora) => {
-    const idTarjetaRadio = document.getElementById(
-      `TarjetaRadio-${radiodifusora.id}`,
-    );
-    idTarjetaRadio.className = "tarjetaRadio";
-  });
-  const h3Label = document.querySelectorAll("h3");
-  h3Label.forEach((h3) => {
-    h3.style.color = "black";
-  });
-  const bodyColor = document.querySelector("body");
-  bodyColor.style.backgroundColor = "white";
-}
-
-/**
- * Controla la activación y desactivación del modo oscuro mediante un interruptor.
- * Detecta los cambios de estado del switch y ejecuta la función correspondiente
- * para aplicar o quitar el modo oscuro.
- * También actualiza el texto del botón según el estado del interruptor.
- */
-idToggleBlack.addEventListener("change", () => {
-  /* En cuanto detecta encendido el switch, agrega el modo oscuro;
+function inicializarModoOscuro() {
+  idToggleBlack.addEventListener("change", () => {
+    /* En cuanto detecta encendido el switch, agrega el modo oscuro;
      cuando se desactiva, se quita el modo oscuro. */
-  document.body.classList.toggle("dark-mode", idToggleBlack.checked);
-  if (idToggleBlack.checked) {
-    activarModoOscuro();
-    txtBtnBlack.textContent = "Desactivar modo oscuro";
-  } else {
-    desactivarModoOscuro();
-    txtBtnBlack.textContent = "Activar modo oscuro";
-  }
-});
+    document.body.classList.toggle("dark-mode", idToggleBlack.checked);
+    if (idToggleBlack.checked) {
+      modoOscuro(true);
+      txtBtnBlack.textContent = "Desactivar modo oscuro";
+    } else {
+      modoOscuro(false);
+      txtBtnBlack.textContent = "Activar modo oscuro";
+    }
+  });
+}
 
 // Establecer el color negro en todos los encabezados h3 al cargar la página.
 // Esto evita que los estilos predeterminados de Blogger modifiquen su color.
 h3Label.forEach((h3) => {
   h3.style.color = "black";
 });
+
+generarTarjetas();
+inicializarReproductor();
+inicializarModoOscuro();
