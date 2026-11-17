@@ -180,6 +180,7 @@ function inicializarReproductor() {
  * @param {boolean} [isActivoModoOscuro=false] - Indica si el modo oscuro está activo.
  */
 function modoOscuro(isActivoModoOscuro = false) {
+  // TODO: quitar los console.log que no sean necesarios
   console.log("Se manda a llamar la función modoOscuro actualizado");
 
   arregloRadiodifusoras.forEach((radiodifusora) => {
@@ -201,11 +202,25 @@ function modoOscuro(isActivoModoOscuro = false) {
  * Detecta los cambios de estado y ejecuta la función correspondiente.
  */
 function inicializarModoOscuro() {
+  let obtenerConfig = localStorage.getItem("Modo oscuro");
+  console.log("obtenerConfig", obtenerConfig);
+  if (idToggleBlack.checked) {
+    console.log("Esta activado el toggle");                
+  } else {
+    console.log("Esta desactivado el toggle");
+  }
+  if (obtenerConfig) {
+    idToggleBlack.checked = true;
+    modoOscuro(true);
+  }
+  console.log(idToggleBlack.checked);
+  document.body.classList.toggle("dark-mode", idToggleBlack.checked);
   idToggleBlack.addEventListener("change", () => {
     /* En cuanto detecta encendido el switch, agrega el modo oscuro;
      cuando se desactiva, se quita el modo oscuro. */
     document.body.classList.toggle("dark-mode", idToggleBlack.checked);
     if (idToggleBlack.checked) {
+      localStorage.setItem("Modo oscuro", "activado");
       modoOscuro(true);
       txtBtnBlack.textContent = "Desactivar modo oscuro";
     } else {
