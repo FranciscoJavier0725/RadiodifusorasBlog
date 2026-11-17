@@ -204,14 +204,14 @@ function modoOscuro(isActivoModoOscuro = false) {
 function inicializarModoOscuro() {
   let obtenerConfig = localStorage.getItem("Modo oscuro");
   console.log("obtenerConfig", obtenerConfig);
-  if (idToggleBlack.checked) {
-    console.log("Esta activado el toggle");                
-  } else {
-    console.log("Esta desactivado el toggle");
-  }
-  if (obtenerConfig) {
+  if (obtenerConfig == "activado") {
     idToggleBlack.checked = true;
     modoOscuro(true);
+    txtBtnBlack.textContent = "Desactivar modo oscuro";
+  } else {
+    idToggleBlack.checked = false;
+    modoOscuro(false);
+    txtBtnBlack.textContent = "Activar modo oscuro";
   }
   console.log(idToggleBlack.checked);
   document.body.classList.toggle("dark-mode", idToggleBlack.checked);
@@ -224,6 +224,7 @@ function inicializarModoOscuro() {
       modoOscuro(true);
       txtBtnBlack.textContent = "Desactivar modo oscuro";
     } else {
+      localStorage.setItem("Modo oscuro", "desactivado");
       modoOscuro(false);
       txtBtnBlack.textContent = "Activar modo oscuro";
     }
