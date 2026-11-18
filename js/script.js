@@ -180,9 +180,6 @@ function inicializarReproductor() {
  * @param {boolean} [isActivoModoOscuro=false] - Indica si el modo oscuro está activo.
  */
 function modoOscuro(isActivoModoOscuro = false) {
-  // TODO: quitar los console.log que no sean necesarios
-  console.log("Se manda a llamar la función modoOscuro actualizado");
-
   arregloRadiodifusoras.forEach((radiodifusora) => {
     const idTarjetaRadio = document.getElementById(
       `TarjetaRadio-${radiodifusora.id}`,
@@ -202,32 +199,30 @@ function modoOscuro(isActivoModoOscuro = false) {
  * Detecta los cambios de estado y ejecuta la función correspondiente.
  */
 function inicializarModoOscuro() {
-  let obtenerConfig = localStorage.getItem("Modo oscuro");
-  console.log("obtenerConfig", obtenerConfig);
-  if (obtenerConfig == "activado") {
-    idToggleBlack.checked = true;
-    modoOscuro(true);
-    txtBtnBlack.textContent = "Desactivar modo oscuro";
-  } else {
-    idToggleBlack.checked = false;
-    modoOscuro(false);
-    txtBtnBlack.textContent = "Activar modo oscuro";
-  }
-  console.log(idToggleBlack.checked);
-  document.body.classList.toggle("dark-mode", idToggleBlack.checked);
+  const obtenerCofigModoOscuro = localStorage.getItem("Modo oscuro");
+  const isModoOscuroActivado = obtenerCofigModoOscuro === "activado";
+
+  idToggleBlack.checked = isModoOscuroActivado;
+  modoOscuro(isModoOscuroActivado);
+
+  txtBtnBlack.textContent = isModoOscuroActivado
+    ? "Desactivar modo oscuro"
+    : "Activar modo oscuro";
+
+  document.body.classList.toggle("dark-mode", isModoOscuroActivado);
   idToggleBlack.addEventListener("change", () => {
+    const isModoOscuroActivado = idToggleBlack.checked;
     /* En cuanto detecta encendido el switch, agrega el modo oscuro;
      cuando se desactiva, se quita el modo oscuro. */
-    document.body.classList.toggle("dark-mode", idToggleBlack.checked);
-    if (idToggleBlack.checked) {
-      localStorage.setItem("Modo oscuro", "activado");
-      modoOscuro(true);
-      txtBtnBlack.textContent = "Desactivar modo oscuro";
-    } else {
-      localStorage.setItem("Modo oscuro", "desactivado");
-      modoOscuro(false);
-      txtBtnBlack.textContent = "Activar modo oscuro";
-    }
+    document.body.classList.toggle("dark-mode", isModoOscuroActivado);
+    localStorage.setItem(
+      "Modo oscuro",
+      isModoOscuroActivado ? "activado" : "desactivado",
+    );
+    modoOscuro(isModoOscuroActivado);
+    txtBtnBlack.textContent = isModoOscuroActivado
+      ? "Desactivar modo oscuro"
+      : "Activar modo oscuro";
   });
 }
 
